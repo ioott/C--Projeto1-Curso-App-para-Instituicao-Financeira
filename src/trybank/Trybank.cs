@@ -1,67 +1,82 @@
-namespace Trybank.Lib;
-
-public class TrybankLib
+namespace Trybank.Lib
 {
-    public bool Logged;
-    public int loggedUser;
-
-    //0 -> Número da conta
-    //1 -> Agência
-    //2 -> Senha
-    //3 -> Saldo
-    public int[,] Bank;
-    public int registeredAccounts;
-    private int maxAccounts = 50;
-
-    public TrybankLib()
+    public class TrybankLib
     {
-        loggedUser = -99;
-        registeredAccounts = 0;
-        Logged = false;
-        Bank = new int[maxAccounts, 4];
-    }
+        public bool Logged;
+        public int loggedUser;
 
-    // 1. Construa a funcionalidade de cadastrar novas contas
-    public void RegisterAccount(int number, int agency, int pass)
-    {
-        throw new NotImplementedException();
-    }
+        //0 -> Número da conta
+        //1 -> Agência
+        //2 -> Senha
+        //3 -> Saldo
+        public int[,] Bank;
+        public int registeredAccounts;
+        private int maxAccounts = 50;
 
-    // 2. Construa a funcionalidade de fazer Login
-    public void Login(int number, int agency, int pass)
-    {
-        throw new NotImplementedException();
-    }
+        public TrybankLib()
+        {
+            loggedUser = -99;
+            registeredAccounts = 0;
+            Logged = false;
+            Bank = new int[maxAccounts, 4];
+        }
 
-    // 3. Construa a funcionalidade de fazer Logout
-    public void Logout()
-    {
-        throw new NotImplementedException();
-    }
+        // 1. Construa a funcionalidade de cadastrar novas contas
+        public void RegisterAccount(int number, int agency, int pass)
+        {
+            // Verificar se a conta já existe no array Bank
+            for (int i = 0; i < registeredAccounts; i++)
+            {
+                if (Bank[i, 0] == number && Bank[i, 1] == agency)
+                {
+                    throw new ArgumentException("A conta já está sendo usada!");
+                }
+            }
 
-    // 4. Construa a funcionalidade de checar o saldo
-    public int CheckBalance()
-    {
-        throw new NotImplementedException();   
-    }
+            // Se a conta não existir, armazenar a nova conta com saldo 0
+            Bank[registeredAccounts, 0] = number;  // Número da conta
+            Bank[registeredAccounts, 1] = agency;  // Agência
+            Bank[registeredAccounts, 2] = pass;    // Senha
+            Bank[registeredAccounts, 3] = 0;       // Saldo inicial
 
-    // 5. Construa a funcionalidade de depositar dinheiro
-    public void Deposit(int value)
-    {
-        throw new NotImplementedException();
-    }
+            // Incrementar o número de contas registradas
+            registeredAccounts++;
+        }
 
-    // 6. Construa a funcionalidade de sacar dinheiro
-    public void Withdraw(int value)
-    {
-        throw new NotImplementedException();
-    }
+        // 2. Construa a funcionalidade de fazer Login
+        public void Login(int number, int agency, int pass)
+        {
+            throw new NotImplementedException();
+        }
 
-    // 7. Construa a funcionalidade de transferir dinheiro entre contas
-    public void Transfer(int destinationNumber, int destinationAgency, int value)
-    {
-        throw new NotImplementedException();
-    }
+        // 3. Construa a funcionalidade de fazer Logout
+        public void Logout()
+        {
+            throw new NotImplementedException();
+        }
 
-   
+        // 4. Construa a funcionalidade de checar o saldo
+        public int CheckBalance()
+        {
+            throw new NotImplementedException();
+        }
+
+        // 5. Construa a funcionalidade de depositar dinheiro
+        public void Deposit(int value)
+        {
+            throw new NotImplementedException();
+        }
+
+        // 6. Construa a funcionalidade de sacar dinheiro
+        public void Withdraw(int value)
+        {
+            throw new NotImplementedException();
+        }
+
+        // 7. Construa a funcionalidade de transferir dinheiro entre contas
+        public void Transfer(int destinationNumber, int destinationAgency, int value)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
