@@ -146,7 +146,38 @@ namespace Trybank.Lib
         // 7. Construa a funcionalidade de transferir dinheiro entre contas
         public void Transfer(int destinationNumber, int destinationAgency, int value)
         {
-            throw new NotImplementedException();
+            // Verifica se há um usuário logado
+            if (!Logged)
+            {
+                throw new AccessViolationException("Usuário não está logado");
+            }
+
+            // Verifica se há saldo suficiente
+            if (Bank[loggedUser, 3] < value)
+            {
+                throw new InvalidOperationException("Saldo insuficiente");
+            }
+
+            // Procura a conta de destino
+            int destinationIndex = -1;
+            for (int i = 0; i < registeredAccounts; i++)
+            {
+                if (Bank[i, 0] == destinationNumber && Bank[i, 1] == destinationAgency)
+                {
+                    destinationIndex = i;
+                    break;
+                }
+            }
+
+            // Se a conta destino não for encontrada
+            if (destinationIndex == -1)
+            {
+                throw new ArgumentException("Agência + Conta não encontrada");
+            }
+
+            // Realiza a transferência
+            Bank[loggedUser, 3] -= value;
+            Bank[destinationIndex, 3] += value;
         }
     }
 }
