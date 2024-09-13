@@ -114,7 +114,14 @@ namespace Trybank.Lib
         // 5. Construa a funcionalidade de depositar dinheiro
         public void Deposit(int value)
         {
-            throw new NotImplementedException();
+            // Verifica se há um usuário logado
+            if (!Logged)
+            {
+                throw new AccessViolationException("Usuário não está logado");
+            }
+
+            // Adiciona o valor ao saldo da conta do usuário logado
+            Bank[loggedUser, 3] += value;
         }
 
         // 6. Construa a funcionalidade de sacar dinheiro
