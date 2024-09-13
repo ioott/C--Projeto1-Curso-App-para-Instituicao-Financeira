@@ -87,7 +87,15 @@ namespace Trybank.Lib
         // 3. Construa a funcionalidade de fazer Logout
         public void Logout()
         {
-            throw new NotImplementedException();
+            // Verifica se há algum usuário logado
+            if (!Logged)
+            {
+                throw new AccessViolationException("Usuário não está logado");
+            }
+
+            // Caso haja um usuário logado, altera o estado e reseta o índice loggedUser
+            Logged = false;
+            loggedUser = -99;
         }
 
         // 4. Construa a funcionalidade de checar o saldo
