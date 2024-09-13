@@ -46,7 +46,42 @@ namespace Trybank.Lib
         // 2. Construa a funcionalidade de fazer Login
         public void Login(int number, int agency, int pass)
         {
-            throw new NotImplementedException();
+            // Verificar se já existe um usuário logado
+            if (Logged)
+            {
+                throw new AccessViolationException("Usuário já está logado");
+            }
+
+            // Procurar a combinação de número e agência no array Bank
+            bool accountFound = false;
+            for (int i = 0; i < registeredAccounts; i++)
+            {
+                // Verifica se o número da conta e a agência correspondem
+                if (Bank[i, 0] == number && Bank[i, 1] == agency)
+                {
+                    accountFound = true;
+
+                    // Verifica se a senha está correta
+                    if (Bank[i, 2] == pass)
+                    {
+                        // Atualiza o estado de logado e armazena a posição do usuário
+                        Logged = true;
+                        loggedUser = i;
+                        return; // Login bem-sucedido, não precisa continuar
+                    }
+                    else
+                    {
+                        // Senha incorreta
+                        throw new ArgumentException("Senha incorreta");
+                    }
+                }
+            }
+
+            // Se não encontrar a combinação de número e agência, lança exceção
+            if (!accountFound)
+            {
+                throw new ArgumentException("Agência + Conta não encontrada");
+            }
         }
 
         // 3. Construa a funcionalidade de fazer Logout
